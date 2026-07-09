@@ -1,172 +1,222 @@
-✈️ AI Travel Planner (Agentic System using LangGraph)
-🧠 Overview
+# ✈️ AI Travel Planner — Multi-Agent Travel Intelligence System
 
-The AI Travel Planner is an agent-based travel intelligence system that generates personalized, multi-day travel itineraries using LangGraph orchestration, LLMs, and real-world APIs.
+## Overview
 
-The system decomposes travel planning into multiple intelligent agents (weather, attractions, hotels, transport, itinerary generation) and combines their outputs into a structured, user-friendly travel guide.
+AI Travel Planner is a production-style, multi-agent travel planning system built with **LangGraph**, **LLMs**, and **real-time APIs**. Instead of relying on a single prompt, the application decomposes travel planning into specialized agents that collaborate to generate personalized, day-wise itineraries.
 
-🚀 Live Features
-🧳 AI-powered travel itinerary generation
-🌍 Smart destination understanding
-🌦 Real-time weather forecasting
-📍 Tourist attractions discovery
-🍽 Restaurant recommendations
-🏨 Hotel suggestions near location
-🚗 Transportation planning (distance + mode recommendation)
-📄 Markdown-style itinerary generation
-💾 SQLite travel history storage
-📥 Downloadable itineraries
-🏗️ System Architecture
-User (Streamlit UI)
-        │
-        ▼
-Input Extraction (LLM Parser)
-        │
-        ▼
-LangGraph Orchestrator (DAG Engine)
-        │
- ┌──────┼───────────┬─────────────┬────────────┐
- ▼      ▼           ▼             ▼            ▼
-Travel  Weather   Hotel    Transportation  External APIs
-Agent    Agent     Agent        Agent
-        │
-        ▼
+The system combines reasoning, tool calling, state management, and external APIs to deliver accurate and context-aware travel recommendations.
+
+---
+
+## Key Features
+
+* 🤖 Multi-agent orchestration using LangGraph
+* 🧠 LLM-powered itinerary generation
+* 🌍 Destination understanding and travel recommendations
+* 🌦 Real-time weather forecasts
+* 🏨 Hotel recommendations
+* 🍽 Restaurant discovery
+* 📍 Tourist attraction search
+* 🚗 Route and transportation planning
+* 💾 Persistent trip history with SQLite
+* 📄 Markdown itinerary generation
+* 📥 Downloadable travel plans
+
+---
+
+# Architecture
+
+```
+User (Streamlit)
+      │
+      ▼
+Input Extraction (LLM)
+      │
+      ▼
+LangGraph Orchestrator
+      │
+ ┌────┼────────┬─────────┬─────────────┐
+ ▼    ▼        ▼         ▼
+Travel Weather Hotel Transportation
+Agent  Agent   Agent      Agent
+      │
+      ▼
 Itinerary Generator (LLM)
-        │
-        ▼
-Formatter (UI Optimized Output)
-        │
-        ▼
-SQLite Storage + Download
-⚙️ Tech Stack
-🧠 AI / LLM
-LangGraph
-Groq LLM (Llama / Qwen models)
-Structured LLM output (Pydantic)
-🌐 APIs
-Geoapify (Geocoding + Places)
-OpenWeather API
-OpenRouteService (Routing)
-Tavily Search API
-🖥️ Backend
-Python
-SQLite (persistent storage)
-🎨 Frontend
-Streamlit
-🧠 System Design Highlights
-🔹 1. Agent-Based Architecture
+      │
+      ▼
+Formatter
+      │
+      ▼
+SQLite + Download
+```
 
-Each task is handled by independent agents:
+---
 
-Travel Agent → Attractions & restaurants
-Weather Agent → Forecasting
-Hotel Agent → Accommodation search
-Transport Agent → Route optimization
-🔹 2. LangGraph DAG Execution
-Parallel execution of nodes
-Controlled data flow
-Deterministic pipeline execution
-🔹 3. Tool-Augmented LLM System
+# Agent Workflow
 
-LLMs are combined with real APIs:
+### Travel Agent
 
-Web search (Tavily)
-Maps & geolocation (Geoapify)
-Weather data (OpenWeather)
-Route optimization (ORS)
-🔹 4. Fault-Tolerant Design
-Safe JSON parsing
-API failure handling
-Graceful degradation for missing data
-🔹 5. Persistent Memory
-SQLite stores user trips
-Downloadable travel history
-Multi-session support
-📁 Project Structure
+* Discovers attractions and restaurants
+* Searches destination-specific activities
+
+### Weather Agent
+
+* Retrieves live weather forecasts
+* Adds weather-aware recommendations
+
+### Hotel Agent
+
+* Suggests accommodations near the destination
+
+### Transportation Agent
+
+* Calculates routes
+* Recommends travel modes
+* Estimates distances
+
+### Itinerary Generator
+
+* Combines outputs from all agents
+* Produces a structured day-wise travel plan
+
+---
+
+# AI & Orchestration
+
+* **LangGraph** for stateful multi-agent workflows
+* **Groq LLMs (Llama/Qwen)** for reasoning and itinerary generation
+* **Pydantic** for structured outputs and validation
+* Parallel agent execution with deterministic graph orchestration
+
+---
+
+# External Tools
+
+* Geoapify — Geocoding & Places
+* OpenWeather — Weather Forecasts
+* OpenRouteService — Routing & Distance
+* Tavily Search — Web Search
+
+---
+
+# Tech Stack
+
+**AI**
+
+* LangGraph
+* LangChain
+* Groq LLM
+* Pydantic
+
+**Backend**
+
+* Python
+* SQLite
+
+**Frontend**
+
+* Streamlit
+
+**APIs**
+
+* Geoapify
+* OpenWeather
+* OpenRouteService
+* Tavily
+
+---
+
+# Production Features
+
+* Modular architecture
+* Stateful agent execution
+* Persistent memory with SQLite
+* API retry & graceful error handling
+* Structured JSON validation
+* Downloadable itineraries
+* Multi-session support
+
+---
+
+# Project Structure
+
+```
 TravelPlanner/
-│
-├── app.py                  # Streamlit frontend
-├── graph.py                # LangGraph pipeline
-├── db.py                   # SQLite storage
-├── extractor.py           # LLM-based input parsing
-├── config.py              # API keys
+│── app.py
+│── graph.py
+│── db.py
+│── extractor.py
+│── config.py
 │
 ├── models/
-│   └── state.py           # TravelState schema
+│   └── state.py
 │
 ├── nodes/
 │   ├── orchestrator.py
 │   ├── travel_node.py
 │   ├── weather_node.py
 │   ├── hotel_node.py
-│   ├── itinerary_node.py
-│   ├── format_node.py
 │   ├── transportation_node.py
+│   ├── itinerary_node.py
+│   └── format_node.py
 │
 ├── services/
 │   ├── geo.py
 │   ├── weather.py
 │   ├── attractions.py
 │   ├── restaurants.py
-│   ├── transport.py
+│   └── transport.py
 │
-├── .env
 └── README.md
-⚙️ Installation
-git clone https://github.com/your-username/TravelPlanner.git
-cd TravelPlanner
+```
 
-pip install -r requirements.txt
-🔑 Environment Variables (.env)
-GROQ_API_KEY=your_key
-TAVILY_API_KEY=your_key
-GEOAPIFY_API_KEY=your_key
-OPENWEATHER_API_KEY=your_key
-ORS_API_KEY=your_key
-▶️ Run the Project
-streamlit run app.py
-🧪 Example Workflow
+---
 
-User enters:
+# Example Workflow
 
-"Plan a 5-day trip to Manali from Delhi under budget"
+User Request:
 
-System:
-Extracts structured input using LLM
-Identifies missing fields (if any)
-Calls multiple agents in parallel
-Fetches real-time data from APIs
-Generates itinerary using LLM
-Formats output into travel guide
-📊 Output Example
-Day-wise itinerary
-Places to visit
-Restaurants
-Weather insights
-Safety tips
-Transport suggestions
-🧠 Key Innovations
-🔹 Multi-agent LangGraph pipeline
-🔹 Real-time API + LLM hybrid system
-🔹 Structured travel intelligence system
-🔹 Parallel node execution (DAG)
-🔹 Production-style modular architecture
-📌 Future Improvements
-🔥 User authentication system
-🔥 Map visualization (Leaflet / Folium)
-🔥 Live flight pricing API
-🔥 Mobile-friendly UI
-🔥 Deployment (Docker + Cloud)
-🏆 Project Impact
+> *Plan a 5-day budget trip to Manali from Delhi.*
 
-This project demonstrates:
+The system:
 
-Advanced LLM orchestration
-Real-world system design skills
-API integration at scale
-Production-grade modular architecture
-End-to-end AI product development
-👨‍💻 Author
+1. Extracts structured travel details using an LLM.
+2. Identifies missing information and requests clarification if needed.
+3. Executes multiple agents in parallel.
+4. Retrieves live weather, attractions, hotels, and routing data.
+5. Generates a personalized itinerary.
+6. Formats the output and stores it for future access.
 
-Rohit Yadav
-AI/ML Engineer | Data Science Enthusiast
+---
+
+# Future Improvements
+
+* User authentication
+* Interactive maps (Leaflet/Folium)
+* Flight and train booking integration
+* Budget optimization
+* Docker deployment
+* Cloud-native deployment
+* Human-in-the-loop itinerary editing
+
+---
+
+# Skills Demonstrated
+
+* Multi-Agent AI Systems
+* LangGraph Orchestration
+* Tool Calling
+* Stateful Workflows
+* Retrieval-Augmented Generation (RAG)
+* API Integration
+* LLM Engineering
+* FastAPI/Streamlit Development
+* Production-Ready AI Architecture
+
+---
+
+## Author
+
+**Rohit Kumar Yadav**
+
+AI/ML Engineer | Generative AI | LLMs | Agentic AI | LangGraph | LangChain
