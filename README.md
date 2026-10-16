@@ -8,6 +8,19 @@ The system combines reasoning, tool calling, state management, and external APIs
 
 ---
 
+
+<img width="1898" height="912" alt="Screenshot_17-10-2026_14919_drive google com" src="https://github.com/user-attachments/assets/9f86255e-b1d1-4041-82b0-5168a67b0f0a" />
+
+
+<img width="1890" height="900" alt="Screenshot_17-10-2026_14935_drive google com" src="https://github.com/user-attachments/assets/32235b2f-7c76-4426-85c5-0def97a8acee" />
+
+
+<img width="1176" height="911" alt="Screenshot_17-10-2026_15013_drive google com" src="https://github.com/user-attachments/assets/407b8362-11c8-4d49-a769-4374d7126f80" />
+
+
+
+
+
 ## Key Features
 
 * 🤖 Multi-agent orchestration using LangGraph
